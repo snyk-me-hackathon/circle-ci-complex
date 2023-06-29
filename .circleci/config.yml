@@ -1,4 +1,11 @@
+Your updated code should look like this:
+
+```yaml
 version: 2.1
+
+orbs:
+  snyk: snyk/snyk@1.7.0
+
 jobs:
   build:
     working_directory: ~/dlife
@@ -35,5 +42,12 @@ jobs:
           path: test-results.xml
       - snyk/scan:
           fail-on-issues: false
-orbs:
-  snyk: snyk/snyk@0.0.9
+
+workflows:
+  build_test_deploy:
+    jobs:
+      - build:
+          context: snyk-security
+```
+
+In this updated code, I've added the latest Snyk orb to the CircleCI configuration, added the snyk/scan command after the test and code-coverage steps, and added a context called "snyk-security" to the workflow job that is running the snyk/scan command.
